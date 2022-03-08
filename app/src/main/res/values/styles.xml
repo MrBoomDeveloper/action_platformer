@@ -1,6 +1,0 @@
-<resources>
-
-    <style name="Fnaf.TextView" parent="">
-        <item name="android:background">@color/white</item>
-    </style>
-</resources>

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">FNaF Multiplayer</string>
+
+    <string name="debug_fps">FPS:</string>
+    <string name="debug_rendered">Rendered objects:</string>
+
+    <string name="default_nick">Player</string>
+    <string name="default_number">0</string>
 </resources>
