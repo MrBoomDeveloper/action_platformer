@@ -51,6 +51,7 @@ public class GameWidget extends View {
             invalidate();
         }
     }
+    
     public void loadBitmap(@NonNull Context context, String path, int width, int height) {
         AssetManager assetManager = context.getAssets();
         InputStream stream;
@@ -62,6 +63,10 @@ public class GameWidget extends View {
             Log.e("load", "Failed to load asset");
         }
         bitmaps.add(Bitmap.createScaledBitmap(bitmap, width, height, false));
+    }
+    
+    public void addObject() {
+    	
     }
 
     public int getFps() {
