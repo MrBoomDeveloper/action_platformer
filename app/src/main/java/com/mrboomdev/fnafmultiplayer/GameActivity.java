@@ -21,6 +21,8 @@ public class GameActivity extends AppCompatActivity {
         rendered = findViewById(R.id.rendered);
 
         game.loadBitmap(this, "amogus.png", 150, 150);
+        
+        game.addObject(
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
