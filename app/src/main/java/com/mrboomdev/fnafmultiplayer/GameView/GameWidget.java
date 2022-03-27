@@ -1,6 +1,7 @@
 package com.mrboomdev.fnafmultiplayer.GameView;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.SystemClock;
@@ -9,7 +10,10 @@ import android.util.Log;
 import android.view.View;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
 
+@Deprecated
 public class GameWidget extends View {
     private final Paint paint;
     public int mFps = 0;
@@ -20,6 +24,7 @@ public class GameWidget extends View {
     private int mapHeight = 0;
     private JSONObject map;
     private final Assets asset = new Assets();
+    List<Bitmap> bitmaps = new ArrayList<>();
 
     public GameWidget(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -37,10 +42,15 @@ public class GameWidget extends View {
             mFpsCounter++;
         }
         int rendered = 0;
-        for(int i = 0; i < mapHeight; i++) {
-            for(int i1 = 0; i1 < mapWidth; i1++) {
+        for(int y = 0; y < mapHeight; y++) {
+            for(int x = 0; x < mapWidth; x++) {
+                try {
+                    Bitmap bitmap = bitmaps.get(map.getJSONArray("objects").getInt(x+y*10-10));
+                    canvas.drawBitmap(bitmap, x*50, y*50-50, paint);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 rendered++;
-                loadObject(i + i1);
             }
         }
         renderedFinal = rendered;
@@ -48,25 +58,20 @@ public class GameWidget extends View {
     }
 
     public void loadMap(Context context, String name) {
-        String jsonString = asset.loadJson(context, "maps/" + name + ".json");
+        String jsonString = asset.loadFile(context, "maps/" + name + ".json");
         try {
             map = new JSONObject(jsonString);
             mapWidth = map.getInt("width");
             mapHeight = map.getInt("height");
+            for(int i = 0; i < 2; i++) {
+                bitmaps.add(asset.loadBitmap(context, "textures/" + i + ".png"));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     public void loadCharacter(int id) {
-        Log.d("load", "failed to load a character");
-    }
-
-    private void loadObject(int id) {
-
-    }
-
-    public int getLoaded() {
-        return 0;
+        Log.d("load", "failed to load a character" + id);
     }
 }

@@ -1,45 +1,29 @@
 package com.mrboomdev.fnafmultiplayer;
 
 import android.os.Bundle;
-import android.widget.TextView;
+import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.mrboomdev.fnafmultiplayer.GameView.GameWidget;
-import java.util.Timer;
-import java.util.TimerTask;
+import com.mrboomdev.fnafmultiplayer.GameView.GameView;
 
 public class GameActivity extends AppCompatActivity {
-    GameWidget game;
-    TextView fps;
-    TextView rendered;
-    TextView loaded;
-    int myId = 0;
+    GameView game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
         game = findViewById(R.id.game);
-        fps = findViewById(R.id.fps);
-        rendered = findViewById(R.id.rendered);
-        loaded = findViewById(R.id.loaded);
+        ImageView jump = findViewById(R.id.jump);
+        ImageView left = findViewById(R.id.left);
+        ImageView right = findViewById(R.id.right);
+        ImageView attack = findViewById(R.id.attack);
 
-        game.loadMap(this, "map1");
-        game.loadCharacter(0);
-        myId = 0;
+        //game.loadMap(this, "map1");
+        //game.loadCharacter(0);
 
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                update();
-            }}, 0, 1000);
-    }
-
-    public void update() {
-        runOnUiThread(() -> {
-            fps.setText(String.valueOf(game.mFps));
-            rendered.setText(String.valueOf(game.renderedFinal));
-            loaded.setText(String.valueOf(game.getLoaded()));
-        });
+        jump.setOnClickListener(v -> finishAffinity());
+        left.setOnClickListener(v -> finishAffinity());
+        right.setOnClickListener(v -> finishAffinity());
+        attack.setOnClickListener(v -> finishAffinity());
     }
 }
