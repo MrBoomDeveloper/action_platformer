@@ -1,8 +1,8 @@
 package com.mrboomdev.fnafmultiplayer;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
 import com.mrboomdev.fnafmultiplayer.GameView.GameWidget;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -11,6 +11,8 @@ public class GameActivity extends AppCompatActivity {
     GameWidget game;
     TextView fps;
     TextView rendered;
+    TextView loaded;
+    int myId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,10 +21,11 @@ public class GameActivity extends AppCompatActivity {
         game = findViewById(R.id.game);
         fps = findViewById(R.id.fps);
         rendered = findViewById(R.id.rendered);
+        loaded = findViewById(R.id.loaded);
 
-        game.loadBitmap(this, "amogus.png", 150, 150);
-        
-        game.addObject(
+        game.loadMap(this, "map1");
+        game.loadCharacter(0);
+        myId = 0;
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -36,6 +39,7 @@ public class GameActivity extends AppCompatActivity {
         runOnUiThread(() -> {
             fps.setText(String.valueOf(game.getFps()));
             rendered.setText(String.valueOf(game.getRendered()));
+            loaded.setText(String.valueOf(game.getLoaded()));
         });
     }
 }

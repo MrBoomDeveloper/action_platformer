@@ -3,6 +3,9 @@
 
     <string name="debug_fps">FPS:</string>
     <string name="debug_rendered">Rendered objects:</string>
+    <string name="debug_loaded">Loaded objects:</string>
+    <string name="debug_x">My x:</string>
+    <string name="debug_y">My y:</string>
 
     <string name="default_nick">Player</string>
     <string name="default_number">0</string>

@@ -1,21 +1,14 @@
 package com.mrboomdev.fnafmultiplayer.GameView;
 
 import android.content.Context;
-import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import androidx.annotation.NonNull;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class GameWidget extends View {
     private final Paint paint;
@@ -23,12 +16,14 @@ public class GameWidget extends View {
     private int mFpsCounter = 0;
     private long mFpsTime = 0;
     private int renderedFinal = 0;
-    List<Bitmap> bitmaps = new ArrayList<>();
+    private int mapWidth = 0;
+    private int mapHeight = 0;
+    private JSONObject map;
+    private final Assets asset = new Assets();
 
     public GameWidget(Context context, AttributeSet attrs) {
         super(context, attrs);
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(Color.RED);
     }
 
     @Override
@@ -41,32 +36,30 @@ public class GameWidget extends View {
         } else {
             mFpsCounter++;
         }
-        if(bitmaps.size() > 0) {
-            int rendered = 0;
-            for (int i = 0; i < bitmaps.size(); i++) {
-                canvas.drawBitmap(bitmaps.get(i), 0, 0, paint);
+        int rendered = 0;
+        for(int i = 0; i < mapHeight; i++) {
+            for(int i1 = 0; i1 < mapWidth; i1++) {
                 rendered++;
             }
-            renderedFinal = rendered;
-            invalidate();
         }
+        renderedFinal = rendered;
+        invalidate();
     }
-    
-    public void loadBitmap(@NonNull Context context, String path, int width, int height) {
-        AssetManager assetManager = context.getAssets();
-        InputStream stream;
-        Bitmap bitmap = null;
+
+    public void loadMap(Context context, String name) {
+        String jsonString = asset.loadJson(context, "maps/" + name + ".json");
         try {
-            stream = assetManager.open(path);
-            bitmap = BitmapFactory.decodeStream(stream);
-        } catch (IOException e) {
-            Log.e("load", "Failed to load asset");
+            Log.d("json", jsonString);
+            map = new JSONObject(jsonString);
+            mapWidth = map.getInt("width");
+            mapHeight = map.getInt("height");
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        bitmaps.add(Bitmap.createScaledBitmap(bitmap, width, height, false));
     }
-    
-    public void addObject() {
-    	
+
+    public void loadCharacter(int id) {
+        Log.d("load", "failed to load a character");
     }
 
     public int getFps() {
@@ -74,5 +67,8 @@ public class GameWidget extends View {
     }
     public int getRendered() {
         return renderedFinal;
+    }
+    public int getLoaded() {
+        return 0;
     }
 }
