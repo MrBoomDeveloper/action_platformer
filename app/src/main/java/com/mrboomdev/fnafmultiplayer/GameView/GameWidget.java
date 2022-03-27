@@ -12,10 +12,10 @@ import org.json.JSONObject;
 
 public class GameWidget extends View {
     private final Paint paint;
-    private int mFps = 0;
+    public int mFps = 0;
     private int mFpsCounter = 0;
     private long mFpsTime = 0;
-    private int renderedFinal = 0;
+    public int renderedFinal = 0;
     private int mapWidth = 0;
     private int mapHeight = 0;
     private JSONObject map;
@@ -40,6 +40,7 @@ public class GameWidget extends View {
         for(int i = 0; i < mapHeight; i++) {
             for(int i1 = 0; i1 < mapWidth; i1++) {
                 rendered++;
+                loadObject(i + i1);
             }
         }
         renderedFinal = rendered;
@@ -49,7 +50,6 @@ public class GameWidget extends View {
     public void loadMap(Context context, String name) {
         String jsonString = asset.loadJson(context, "maps/" + name + ".json");
         try {
-            Log.d("json", jsonString);
             map = new JSONObject(jsonString);
             mapWidth = map.getInt("width");
             mapHeight = map.getInt("height");
@@ -62,12 +62,10 @@ public class GameWidget extends View {
         Log.d("load", "failed to load a character");
     }
 
-    public int getFps() {
-        return mFps;
+    private void loadObject(int id) {
+
     }
-    public int getRendered() {
-        return renderedFinal;
-    }
+
     public int getLoaded() {
         return 0;
     }

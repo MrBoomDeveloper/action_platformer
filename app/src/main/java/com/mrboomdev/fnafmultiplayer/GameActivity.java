@@ -37,8 +37,8 @@ public class GameActivity extends AppCompatActivity {
 
     public void update() {
         runOnUiThread(() -> {
-            fps.setText(String.valueOf(game.getFps()));
-            rendered.setText(String.valueOf(game.getRendered()));
+            fps.setText(String.valueOf(game.mFps));
+            rendered.setText(String.valueOf(game.renderedFinal));
             loaded.setText(String.valueOf(game.getLoaded()));
         });
     }

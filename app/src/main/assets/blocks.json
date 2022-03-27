@@ -1,0 +1,18 @@
+[
+  {
+    "texture": "air",
+    "collision": false,
+    "destroyable": false
+  },
+  {
+    "texture": "amogus",
+    "collision": true,
+    "destroyable": false
+  },
+  {
+    "texture": "dummy",
+    "collision": false,
+    "destroyable": true,
+    "hp": 10
+  }
+]
