@@ -1,3 +1,7 @@
+/*
+PLEASE DELETE THIS WHOLE FILE, WHEN THE NEW GAME VIEW WILL BE FINISHED
+*/
+
 package com.mrboomdev.fnafmultiplayer.GameView;
 
 import android.content.Context;
