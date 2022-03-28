@@ -4,26 +4,15 @@ import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
 public class gameLoop extends Thread {
-    //Set the maximum number of frames per second
-    private static final double MAX_UPS = 30.0;
-    private static final double UPS_PERIOD = 1E+3/MAX_UPS;
+    private static final double MAX_UPS = 60.0, UPS_PERIOD = 1E+3/MAX_UPS;
     private boolean isRunning = false;
-    private SurfaceHolder surfaceHolder;
-    private GameView game;
-    private double averageUps;
-    private double averageFps;
+    private final SurfaceHolder surfaceHolder;
+    private final GameView game;
+    public double averageUps, averageFps;
 
     public gameLoop(GameView game, SurfaceHolder holder) {
         this.game = game;
         this.surfaceHolder = holder;
-    }
-
-    public double getAverageUps() {
-        return averageUps;
-    }
-
-    public double getAverageFps() {
-        return averageFps;
     }
 
     public void startLoop() {
@@ -35,7 +24,7 @@ public class gameLoop extends Thread {
     public void run() {
         super.run();
         int updateCount = 0, frameCount = 0;
-        long startTime, elapsedTime = 0, sleepTime = 0;
+        long startTime, elapsedTime, sleepTime;
         Canvas canvas = null;
         startTime = System.currentTimeMillis();
 
