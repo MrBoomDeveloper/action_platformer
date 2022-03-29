@@ -31,21 +31,23 @@ public class gameLoop extends Thread {
         while (isRunning) {
             try {
                 canvas = surfaceHolder.lockCanvas();
-                synchronized (surfaceHolder) {
-                    game.update();
-                    updateCount++;
-                    game.draw(canvas);
+                if (canvas != null) {
+                	synchronized (surfaceHolder) {
+                    	game.update();
+                    	updateCount++;
+                    	game.draw(canvas);
+                	}
                 }
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             } finally {
-                if(canvas != null) {
-                    try {
+                try {
+                    if (canvas != null) {
                         surfaceHolder.unlockCanvasAndPost(canvas);
                         frameCount++;
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
